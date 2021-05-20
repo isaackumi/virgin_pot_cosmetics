@@ -1,0 +1,9 @@
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+RewriteRule ^sites/Fank_final/views/product-details/([0-9]+) sites/Fank_final/views/product-details.php?prod_id=$1 [NC,L]

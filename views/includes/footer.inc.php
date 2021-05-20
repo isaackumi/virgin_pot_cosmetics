@@ -26,6 +26,7 @@
 <script src="assets/js/imgfix.min.js"></script>
 <script src="assets/js/mixitup.js"></script>
 <script src="assets/js/accordions.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Global Init -->
 <script src="assets/js/custom.js"></script>
@@ -43,5 +44,35 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+
+
+<script>
+  function payWithPaystack(amount,email){
+    var handler = PaystackPop.setup({
+      key: 'sk_live_5efa292c6144a6403a29d8d9b823bbadcd5ecada',
+      email: email,
+      amount: amount + '00',
+      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+      metadata: {
+         custom_fields: [
+            {
+                display_name: "Mobile Number",
+                variable_name: "mobile_number",
+                value: "+2348012345678"
+            }
+         ]
+      },
+      callback: function(response){
+          alert('success. transaction ref is ' + response.reference);
+      },
+      onClose: function(){
+          alert('window closed');
+      }
+    });
+    handler.openIframe();
+  }
+</script>
+
+
 </body>
 </html>

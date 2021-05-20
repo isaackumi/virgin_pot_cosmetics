@@ -1,4 +1,5 @@
 <?php
+
 namespace App\User;
 use App\Session\Session;
 
@@ -42,7 +43,7 @@ return parent::get('login')[0]['customer_id'];
 
       }
 
-      return parent::get('login')[0]['customer_fname'];
+      return parent::get('login')[0]['customer_lname'];
 
 
   }
@@ -60,6 +61,26 @@ return parent::get('login')[0]['customer_id'];
   }
 
 
+ public static function ip() {
+     $ipaddress = '';
+     if (isset($_SERVER['HTTP_CLIENT_IP']))
+         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+     else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+     else if(isset($_SERVER['HTTP_X_FORWARDED']))
+         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+     else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+     else if(isset($_SERVER['HTTP_FORWARDED']))
+         $ipaddress = $_SERVER['HTTP_FORWARDED'];
+     else if(isset($_SERVER['REMOTE_ADDR']))
+         $ipaddress = $_SERVER['REMOTE_ADDR'];
+     else
+         $ipaddress = 'UNKNOWN';
+     return $ipaddress;
+ }
+
+
 public static function hasLogin():bool{
   if(parent::get('login')){
       return true;
@@ -69,24 +90,62 @@ public static function hasLogin():bool{
   return false;
 }
 
+static function logoutAdmin(){
+
+if (Auth::id()) {
+  // code...
+  Session::init();
+  session_unset();
+  session_destroy();
+  header("Location: ../../Login/login.php");
+}
+
+
+
+
+
+
+}
 
 public static function logout(){
 
   if (session_status() == PHP_SESSION_NONE) {
     parent::init();
+    session_unset();
+    session_destroy();
+    header("Location: http://localhost/sites/Fank_final/views/Login/login.php");
 
     }
-  $server = $_SERVER['SERVER_NAME'];
-  session_destroy();
-  header("Location: http://localhost/sites/Fank_final/views/Login/login.php");
+
+
 }
 
-public static function test():void {
-  die('test....');
+public static function gotoLogin(){
+  if(!self::hasLogin()){
+    header("Location: http://localhost/sites/Fank_final/views/Login/login.php");
+
+    exit;
+  }else{
+    return true;
+
+}
 }
 
-public static function name(string $a){
-  echo $a;
+
+
+public static function getVal(string $val){
+
+if (isset($_GET[$val])) {
+  return $_GET[$val];
+}
+
+}
+
+public static function postVal(string $val){
+
+if (isset($_POST[$val])) {
+  return $_POST[$val];
+}
 }
 
 

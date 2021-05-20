@@ -52,25 +52,25 @@ if (isset($_POST['login_user'])){
 	if (isset($check_login)) {
 
 		$hash = $check_login[0]['customer_pass'];
-		// var_dump($hash);
-		// var_dump($lpass);
-		// var_dump(password_verify($lpass, $hash));
 
-		// print_r('pass');
 
 
 		if (password_verify($lpass, $hash)){
 
 				Session::put('login',$check_login);
-				header('Location: ../../index.php');
+				// header('Location: ../../index.php');
+
+					header('Location: ../dashboard/examples/dashboard.php');
 
 				exit;
 		}else{
-			die('an error occured');
+			// die('an error occured');
+			header("Location: login.php");
 		}
 	} else{
 		//echo appropriate error
-		echo "incorrect username or password";
+		// echo "incorrect username or password";
+		header("Location: login.php");
 	}
 }
 

@@ -1,11 +1,14 @@
 <?php
 require_once '../init.php';
+require_once __DIR__.'/../../controllers/ProductController/CartController.php';
 
 use App\User\User;
 use Controllers\ProductController\ProductController;
 use App\User\Auth;
 use App\Session\Session;
 Session::init();
+$x=getTotalItemsInCart();
+$cart_amount = getTotalItemAmountInCart();
 
  ?>
 
@@ -29,20 +32,8 @@ Session::init();
 
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-22F2GH01EB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-22F2GH01EB');
-</script>
-
-
+    <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     </head>
 
@@ -69,13 +60,13 @@ Session::init();
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">Food Store <em> Website</em></a>
+                        <a href="index.html" class="logo">FANK <em> STORE</em></a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
                             <li><a href="products.php" >Products</a></li>
-                            <li><a href="checkout.html">Cart</a></li>
+                            <li><a href="cart.php">Cart [<?= $x; ?> Item(s)]</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
 
@@ -95,7 +86,7 @@ Session::init();
                                   if(Auth::hasLogin()){
                                     echo '  <a class="dropdown-item" href="./dashboard/examples/dashboard.php">Dashboard</a>';
                                     echo '  <a class="dropdown-item" href="#./dashboard/examples/dashboard.php">Profile</a>';
-                                    echo '  <a class="dropdown-item" href="./Login/logout.php">Logout</a>';
+                                    echo '  <a class="dropdown-item" href="">Logout</a>';
                                   }else{
                                     echo '  <a class="dropdown-item" href="./Login/login.php">Login/Register</a>';
                                   }
@@ -107,7 +98,7 @@ Session::init();
                                     <!-- <a class="dropdown-item" href="terms.html">Terms</a> -->
                                 </div>
                             </li>
-                            <li><a href="#" class="btn btn-primary" style="color:white;">Become a seller</a></li>
+                            <li><a href="subscription.php" class="btn btn-primary" style="color:white;">Become a seller</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>

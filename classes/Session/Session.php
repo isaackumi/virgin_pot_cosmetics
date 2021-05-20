@@ -25,12 +25,8 @@ class Session{
 
     }
 
-    /**
-     * get session value by applying session key
-     *
-     * @param [session key] $key
-     * @return void
-     */
+
+
     public static function get($key){
         if(isset($_SESSION[$key])){
             return $_SESSION[$key];

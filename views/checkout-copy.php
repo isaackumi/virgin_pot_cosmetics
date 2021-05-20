@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     </head>
-    
+
     <body>
-    
+
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
       <div class="preloader-inner">
@@ -33,8 +33,8 @@
       </div>
     </div>
     <!-- ***** Preloader End ***** -->
-    
-    
+
+
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
         <div class="container">
@@ -42,7 +42,7 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">Food Store <em> Website</em></a>
+                        <a href="index.html" class="logo">FANK <em> STORE</em></a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
@@ -51,7 +51,7 @@
                             <li><a href="checkout.html" class="active">Checkout</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-                              
+
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="about.html">About Us</a>
                                     <a class="dropdown-item" href="blog.html">Blog</a>
@@ -59,8 +59,8 @@
                                     <a class="dropdown-item" href="terms.html">Terms</a>
                                 </div>
                             </li>
-                            <li><a href="contact.html">Contact</a></li> 
-                        </ul>        
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
@@ -164,7 +164,7 @@
                            <div class="row">
                                 <div class="col-sm-6 col-xs-12">
                                      <label>Payment method</label>
-                                     
+
                                      <select>
                                           <option value="">-- Choose --</option>
                                           <option value="bank">Bank account</option>
@@ -177,8 +177,8 @@
                                      <label>Captcha</label>
                                      <input type="text">
                                 </div>
-                            </div>  
-                            
+                            </div>
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="main-button">
@@ -292,10 +292,10 @@
     <script src="assets/js/scrollreveal.min.js"></script>
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/imgfix.min.js"></script> 
-    <script src="assets/js/mixitup.js"></script> 
+    <script src="assets/js/imgfix.min.js"></script>
+    <script src="assets/js/mixitup.js"></script>
     <script src="assets/js/accordions.js"></script>
-    
+
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
 

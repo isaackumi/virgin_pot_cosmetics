@@ -130,55 +130,10 @@ function view_products($category){
 
 
 
-function recommended(){
-	//Create an array variable to hold list of products
-	$product_array = array();
-
-	//create an instance of the product class
-	$product_object = new Product();
-
-	//run the view all product method
-	$product_records = $product_object->recommended();
-
-	//check if the method worked
-	if ($product_records) {
-
-		//loop to see if there is more than one result
-		//fetch one at a time
-		while ($one_record = $product_object->db_fetch()) {
-			//Assign each result to the array
-			$product_array[] = $one_record;
-		}
-	}
-	//return the array
-	return $product_array;
-}
 
 
 
-function new_arrival($category){
-	//Create an array variable to hold list of products
-	$product_array = array();
 
-	//create an instance of the product class
-	$product_object = new Product();
-
-	//run the view all product method
-	$product_records = $product_object->new_arrival($category);
-
-	//check if the method worked
-	if ($product_records) {
-
-		//loop to see if there is more than one result
-		//fetch one at a time
-		while ($one_record = $product_object->db_fetch()) {
-			//Assign each result to the array
-			$product_array[] = $one_record;
-		}
-	}
-	//return the array
-	return $product_array;
-}
 
 
 public function viewAllProducts(){
@@ -190,6 +145,31 @@ public function viewAllProducts(){
 
 	//run the view all product method
 	$product_records = $product_object->view_all_products();
+
+	//check if the method worked
+	if ($product_records) {
+
+		//loop to see if there is more than one result
+		//fetch one at a time
+		while ($one_record = $product_object->db_fetch()) {
+			//Assign each result to the array
+			$product_array[] = $one_record;
+		}
+	}
+	//return the array
+	return $product_array;
+}
+
+
+public function viewAllCategories(){
+	//Create an array variable to hold list of products
+	$product_array = array();
+
+	//create an instance of the product class
+	$product_object = new Product();
+
+	//run the view all product method
+	$product_records = $product_object->view_all_categories();
 
 	//check if the method worked
 	if ($product_records) {
@@ -257,12 +237,12 @@ function viewOneProduct($pin){
 
 
 //update a product function - takes id, title and price
-function update_product_fxn($a, $b, $c){
+function update_product_fxn($prod_title, $prod_price,$product_desc, $category,$prod_img,$prod_id){
 	//create an instance of the product class
 	$product_object = new Product();
 
 	//run the update one product method
-	$update_product = $product_object->update_one_product($a, $b, $c);
+	$update_product = $product_object->update_one_product($prod_title, $prod_price,$product_desc, $category,$prod_img,$prod_id);
 
 	//check if method worked
 	if ($update_product) {
@@ -493,9 +473,9 @@ function insert_order_detail_fxn($a, $b, $c, $d){
 
 }
 
-function insert_order_fxn($id, $pid,$email, $number, $address,$town,$qty){
-	$customer=new Product();
-	$checkinsert=$customer->insert_order($id, $pid,$email, $number, $address,$town,$qty);
+function insert_order_fxn($customer_id,$random){
+	$customer = new Product();
+	$checkinsert = (new Product())->insert_order($customer_id,$random);
 	if ($checkinsert){
 		return true;
 	}else{
@@ -505,6 +485,40 @@ function insert_order_fxn($id, $pid,$email, $number, $address,$town,$qty){
 
 }
 
+
+function just_ordered_id($invoice_no){
+  // $check = (new Product())->just_ordered_id($invoice_no);
+
+  //Create an array variable to the product key value pair
+  $product_array = array();
+
+  //create an instance of the product class
+  $product_object = new Product();
+
+  //run the view one product method
+  $product_record = $product_object->just_ordered_id($invoice_no);
+
+  //check if the method worked
+  if ($product_record) {
+
+    //fetch the result
+    $one_record = $product_object->db_fetch();
+    //assign to array
+    $product_array[] = $one_record;
+  }
+  //return array
+  return $product_array;
+}
+
+
+function populate_order_details($order_id,$invoice_no,$ip){
+  $checkinsert=(new Product())->populate_order_details($order_id,$invoice_no,$ip);
+  if ($checkinsert){
+		return true;
+	}else{
+		return false;
+	}
+}
 //insert payment function.
 //takes amount, customer id and order id
 function insert_payment_fxn($a, $b, $c){
@@ -543,6 +557,9 @@ public function create_category($category){
 }
 
 
+
+
+
 public function displayHomeProd(){
 
   $prod = $this->viewAllProducts();
@@ -560,7 +577,9 @@ public function displayHomeProd(){
         <div class="col-lg-4">
             <div class="trainer-item">
                 <div class="image-thumb">
+                <a href="product-details.php?prod_id=$id">
                     <img src="assets/images/product-5-720x480.jpg" alt="">
+                </a>
                 </div>
                 <div class="down-content">
                     <span>
@@ -572,10 +591,54 @@ public function displayHomeProd(){
                     <p>$desc</p>
 
                     <ul class="social-icons">
-                        <li><a href="product-details.php?prod_id=$id">+ View More</a></li>
+
 
                         <li><button type="button" href="./views/product-details/$id" onclick="addItemToCart($id,1);" class="btn btn-primary" style="color:white;">+ Add To Cart</button></li>
+
                     </ul>
+                </div>
+            </div>
+        </div>
+        _HomeProd;
+
+      }
+    }
+
+}
+
+
+
+
+public function landingPage(){
+
+  $prod = $this->viewAllProducts();
+  // $amt =getTotalItemAmountInCart();
+
+  if ($prod) {
+      foreach ($prod as $value) {
+          $id = $value['product_id'];
+          $title = $value['product_title'];
+          $price = $value['product_price'];
+          $desc = $value['product_desc'];
+        $img = $value['img1'];
+
+        echo <<< _HomeProd
+        <div class="col-lg-3 col-md-6 special-grid best-seller">
+            <div class="products-single fix">
+                <div class="">
+                    <div class="type-lb">
+                        <p class="sale">Sale</p>
+                    </div>
+                    <a href="shop-detail.php?prod_id=$id"><img src="../$img" class="img-fluid" alt="Image"> </a>
+
+                    <div class="">
+
+
+                    </div>
+                </div>
+                <div class="why-text">
+                    <h4>$title</h4>
+                    <h5>GH¢ $price</h5>
                 </div>
             </div>
         </div>
@@ -604,72 +667,50 @@ public function displayOneProduct($prod_id){
         $img = $prod[0]['img1'];
 
   echo <<< _displayOne
+  <div class="container">
+      <div class="row">
+          <div class="col-xl-5 col-lg-5 col-md-6">
+              <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
+                  <div class="carousel-inner" role="listbox">
+                      <div class="carousel-item active"> <img class="d-block w-100" src="../$img" alt="First slide"> </div>
 
-  <div class="row">
-    <div class="col-md-8">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100" src="assets/images/product-image-1-1200x600.jpg" alt="First slide">
+                  </div>
+                  <a class="carousel-control-prev" href="#carousel-example-1" role="button" data-slide="prev">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      <span class="sr-only">Previous</span>
+    </a>
+                  <a class="carousel-control-next" href="#carousel-example-1" role="button" data-slide="next">
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+      <span class="sr-only">Next</span>
+    </a>
+
+              </div>
           </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="assets/images/product-image-1-1200x600.jpg" alt="Second slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="assets/images/product-image-1-1200x600.jpg" alt="Third slide">
-          </div>
+          <div class="col-xl-7 col-lg-7 col-md-6">
+              <div class="single-product-details">
+                  <h2>$title</h2>
+                  <h5> GH¢ $price.00</h5>
+                <!--  <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span><p>-->
+      <h4>Short Description:</h4>
+      <p>$desc </p>
+
+
+      <p> Contact  <a href="tel:+233246704180" style="color:#b0b435"> 0246704180 </a>to place your order!</p>
+
+
+        <div class="share-bar">
+          <a class="btn hvr-hover" href="https://www.facebook.com/virginfreshcosmetics"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+
+          <a class="btn hvr-hover" href="https://instagram.com/virginfresh_cosmetics?utm_medium=copy_link"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+
+          <a class="btn hvr-hover" href="https://api.whatsapp.com/send?phone=233558083470"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
+      </div>
+              </div>
+          </div>
       </div>
 
-      <br>
-    </div>
-
-    <div class="col-md-4">
-      <div class="contact-form">
-        <form action="#" id="contact">
-          <div class="form-group">
-            <p>$desc</p>
-          </div>
-
-          <label>Extra 1</label>
-
-          <select>
-              <option value="0">Extra A</option>
-              <option value="1">Extra B</option>
-              <option value="2">Extra C</option>
-          </select>
-
-          <div class="row">
-            <div class="col-md-6">
-              <label>Quantity</label>
-
-              <input type="text" placeholder="1">
-            </div>
-          </div>
-
-          <div class="main-button">
-              <a href="checkout.html">Add to cart</a>
-          </div>
-        </form>
-      </div>
-
-      <br>
-    </div>
   </div>
-
 
 
   _displayOne;
@@ -677,6 +718,171 @@ public function displayOneProduct($prod_id){
 
 
 }
+
+
+public function displaySearchResults($stm){
+
+
+  $prod = $this->search_product_fxn($stm);
+
+
+    if ($prod) {
+        foreach ($prod as $value) {
+            $id = $value['product_id'];
+            $title = $value['product_title'];
+            $price = $value['product_price'];
+            $desc = $value['product_desc'];
+          $img = $value['img1'];
+
+          echo <<< _SearchProd
+
+          <div class="list-view-box">
+              <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                      <div class="products-single fix">
+                          <div class="box-img-hover">
+                              <div class="type-lb">
+                                  <p class="new">New</p>
+                              </div>
+                              <img src="../$img" class="img-fluid" alt="Image">
+                              <div class="mask-icon">
+                                  <ul>
+                                      <li><a href="shop-detail.php?prod_id=$id" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+
+                                  </ul>
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                      <div class="why-text full-width">
+                          <h4>$title</h4>
+                          <h5> GH¢ $price.00</h5>
+                          <p>$desc</p>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+
+          _SearchProd;
+
+        }
+      }else{
+
+        echo "No product found";
+      }
+}
+
+
+
+public function gridView(){
+
+  $prod = $this->viewAllProducts();
+  // $amt =getTotalItemAmountInCart();
+
+  if ($prod) {
+      foreach ($prod as $value) {
+          $id = $value['product_id'];
+          $title = $value['product_title'];
+          $price = $value['product_price'];
+          $desc = $value['product_desc'];
+        $img = $value['img1'];
+
+        echo <<< _Grid
+
+        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+            <div class="products-single fix">
+                <div class="box-img-hover">
+                    <div class="type-lb">
+                        <p class="sale">Sale</p>
+                    </div>
+                    <img src="../$img" class="img-fluid" alt="Image">
+                    <div class="mask-icon">
+                        <ul>
+                            <li><a href="shop-detail.php?prod_id=$id" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="why-text">
+                <a href="shop-detail.php?prod_id=$id">
+                <h4>$title</h4>
+                 </a>
+                    <a href="shop-detail.php?prod_id=$id">
+                    <h5>GH¢ $price.00</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        _Grid;
+
+      }
+    }
+
+}
+
+
+public function listView(){
+
+  $prod = $this->viewAllProducts();
+  // $amt =getTotalItemAmountInCart();
+
+  if ($prod) {
+      foreach ($prod as $value) {
+          $id = $value['product_id'];
+          $title = $value['product_title'];
+          $price = $value['product_price'];
+          $desc = $value['product_desc'];
+        $img = $value['img1'];
+
+        echo <<< _List
+
+        <div class="list-view-box">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <div class="products-single fix">
+                        <div class="">
+                            <div class="type-lb">
+                                <p class="new">New</p>
+                            </div>
+                            <a href="shop-detail.php?prod_id=$id">
+                            <img src="../$img" class="img-fluid" alt="Image">
+                            </a>
+                            <div class="">
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                <div class="why-text">
+                <a href="shop-detail.php?prod_id=$id">
+                <h4>$title</h4>
+                 </a>
+                    <a href="shop-detail.php?prod_id=$id">
+                    <h5>GH¢ $price.00</h5>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        _List;
+
+      }
+    }
+
+}
+
+
 
 
 

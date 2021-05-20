@@ -15,7 +15,7 @@ $operation_status = '';
 if(isset($_POST["update_qty"]) && !empty($_POST["update_qty"])){
    $prod_id = $_POST["update_qty"];
     $qty = $_POST["qty"];
-    updateCartQty($prod_id, $qty, 1);
+    updateCartQty($prod_id, $qty);
 }
 
 
@@ -52,7 +52,7 @@ function getTotalItemsInCart(){
     $cartObj = new Cart();
     $response = $cartObj->getCartItemQty($ip_add);
     if($response){
-        $row = $cartObj->getRow();
+        $row = $cartObj->db_count();
         return ($row != null) ? $row : "0";
     }  else{
         return "0";
@@ -292,86 +292,13 @@ function getCartItems(){
 
 }
 
+
 function cartDisplay(){
 
   $cart = getCartItems();
   // $amt =getTotalItemAmountInCart();
 
   if ($cart) {
-
-      foreach ($cart as $value) {
-        $cnt = getTotalItemsInCart();
-          $id = $value['product_id'];
-          $title = $value['product_title'];
-          $price = $value['product_price'];
-          $desc = $value['product_desc'];
-
-          $qty = $value['qty'];
-
-        $img = $value['img1'];
-
-        $total = $qty*$price;
-
-        //
-
-        echo "<div class=;row row-pb-md'>";
-        echo "<div class='product-cart'>";
-        echo "<div class='one-forth'>";
-        echo "	<div class='product-img' style='background-image: url(..".$img.");''>";
-        echo "	</div>";
-        echo "	<div class='display-tc'>";
-        echo "		<h3>".$title."</h3>";
-        echo "	</div>";
-        echo " </div>";
-        echo "<div class='one-eight text-center'>";
-        echo "	<div class='display-tc'>";
-        echo "		<span class='price'>".$price."</span>";
-        echo "	</div>";
-        echo "</div>";
-        echo "<div class='one-eight text-center'>";
-        echo "	<div class='display-tc'>";
-        echo "		<input type='number' id='update-qty' value='$qty' name='quaty[]' class='form-control input-number text-center'  min='1'max='100'>";
-        echo "	</div>";
-        echo "</div>";
-        echo "<div class='one-eight text-center'>";
-        echo "	<div class='display-tc'>";
-        echo "		<span  class='price'>".$total."</span>";
-
-
-
-
-        echo "	</div>";
-        echo "</div>";
-        echo "<div class='one-eight'>";
-        echo "	<div class='display-tc '>";
-        echo "<button type='button' value='$id' onclick='updateCartItemQty($id)' class='btn btn-info ' >UPDATE</button>";
-        echo "<button type='button' value='$id' onclick='removeCartItem($id)' class='btn btn-danger' >DELETE</button>";
-        echo "<button type='button' value='$id' onclick='buyProduct($id,$price)' class='btn btn-success' >  BUY </button>";
-        echo "	</div>";
-
-        echo "</div>";
-        echo "</div>";
-
-
-
-
-      }
-    }
-
-}
-
-
-
-
-
-
-
-function cartDisplay2(){
-
-  $cart = getCartItems();
-  // $amt =getTotalItemAmountInCart();
-
-  if ($cart) {
       foreach ($cart as $value) {
           $id = $value['product_id'];
           $title = $value['product_title'];
@@ -381,41 +308,27 @@ function cartDisplay2(){
           $qty = $value['qty'];
 
         $img = $value['img1'];
+
+        $amount = $price *$qty;
 
         echo <<< _CART
-        <li class="cart_item clearfix">
-          <div class="cart_item_image rounded-circle"><img src=".$img" alt=""></div>
-          <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-            <div class="cart_item_name cart_info_col">
+        <tr>
 
-              <div class="cart_item_text">$title</div>
-            </div>
-
-            <div class="cart_item_quantity cart_info_col">
-              <div class="cart_item_title">Quantity</div>
-
-              <input type="number" value="$qty" id="update-qty" class="">
-            </div>
-            <div class="cart_item_price cart_info_col">
-              <div class="cart_item_title">Price</div>
-              <div class="cart_item_text">$price</div>
-            </div>
-            <div class="cart_item_total cart_info_col">
-              <div class="cart_item_title">Total</div>
-              <div class="cart_item_text">GH¢ 0</div>
-            </div>
-
-            <div class="col-lg-12  col-md-4">
-              <a type="button" value="$id" onclick="updateCartItemQty($id)" class="cart_item_title btn-primary">Buy</a>
-
-              <button type="button" value="$id" onclick="removeCartItem($id)" class="cart_item_title btn-danger">Delete</button>
-
-
-
-
-            </div>
-          </div>
-        </li>
+          <td class="w-25">
+            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep" style="width:80px;">
+          </td>
+          <td>$title</td>
+          <td>GH¢ $price.00</td>
+          <td>
+            <input type="number" value="$qty" id="update-qty">
+          </td>
+          <td>GH¢ $amount.00 </td>
+          <td>
+            <button type="button" onclick="updateCartItemQty($id)" class="btn btn-sm btn-success ">Update</button>
+            <button type="button" onclick="removeCartItem($id)" class="btn btn-sm btn-danger">Delete</button>
+          
+          </td>
+        </tr>
 
         _CART;
 

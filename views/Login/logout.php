@@ -1,5 +1,6 @@
 <?php
- session_start();
- session_destroy();
- header('Location: login.php');
+require_once '../../init.php';
+use App\User\Auth;
+
+Auth::logout();
 ?>

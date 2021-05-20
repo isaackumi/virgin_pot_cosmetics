@@ -160,78 +160,7 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
-                  </div>
-                  <p class="card-category">All Products</p>
-                  <h3 class="card-title">49/50
-                    <small>GB</small>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons text-danger">warning</i>
-                    <a href="#pablo">Get More Space...</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">store</i>
-                  </div>
-                  <p class="card-category">Categories</p>
-                  <h3 class="card-title">$34,245</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
-                  </div>
-                  <p class="card-category">Fixed Issues</p>
-                  <h3 class="card-title">75</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                  </div>
-                  <p class="card-category">Followers</p>
-                  <h3 class="card-title">+245</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          </div>
+      
 
 
 
@@ -332,6 +261,8 @@
                                                 <select id="brand_id" class="form-control" name="prod_brand" required>
                                                     <option  value="" disabled selected> -- select brand -- </option>
                                                 <?php
+
+
                                                 if ($all_brand){
                                                     foreach ($all_brand as $value){
                                                         $brand_name = $value['brand_name'];
@@ -349,6 +280,7 @@
                                                 <select id="category_id" class="form-control pull-right" name="prod_category"  required>
                                                     <option value="" disabled selected> -- select category -- </option>
                                                     <?php
+
                                                     if ($all_cat){
                                                         foreach ($all_cat as $value){
                                                             $cat_name = $value['cat_name'];
@@ -385,7 +317,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="ni ni-active-40"></i></span>
                                                 </div>
-                                                <input  type="number" placeholder="Product price"  class="form-control "  id="prod_price" name="prod_price" value="" autocomplete="price" required>
+                                                <input  type="number" placeholder="Product price" value="" class="form-control "  id="prod_price" name="prod_price" value="" autocomplete="price" required>
 
                                             </div>
 

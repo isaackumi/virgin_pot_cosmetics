@@ -32,7 +32,7 @@ $home = new ProductController();
                     <div class="cta-content">
                         <br>
                         <br>
-                        <h2>.00</h2>
+                        <h2><?= Auth::firstName() ?: ''; ?>'s Subscription form</h2>
                         <p></p>
                     </div>
                 </div>
@@ -46,42 +46,37 @@ $home = new ProductController();
         <div class="container">
             <br>
             <br>
-            <form method="post" id="UploadForm" action="process.php">
-
-
-
-
-
+      <form method="post" id="UploadForm" action="process-subscription.php">
 
 
     <div class="form-group">
      <label for="recipient-name" class="col-form-label">Business Name:</label>
-     <input type="text" class="form-control" id="recipient-name">
+     <input type="text" class="form-control" id="recipient-name" name="business_name"  required>
    </div>
    <div class="form-group">
     <label for="recipient-name" class="col-form-label">Business Email:</label>
-    <input type="text" class="form-control" id="recipient-name" value="<?= Auth::email(); ?>">
+    <input type="email" class="form-control" id="recipient-name" value="<?= Auth::email() ?: ''; ?>" name="business_email" required>
   </div>
   <div class="form-group">
    <label for="recipient-name" class="col-form-label">Contact:</label>
-   <input type="text" class="form-control" id="recipient-name">
+   <input type="tel" class="form-control" id="recipient-name" name="business_contact"  required>
  </div>
  <div class="form-group">
   <label for="recipient-name" class="col-form-label">Location:</label>
-  <input type="text" class="form-control" id="recipient-name">
-  <input type="hidden" class="form-control" id="recipient-name" value="<?= Auth::id()?>">
+  <input type="text" class="form-control" id="recipient-name"  name="business_location" required>
+  
 </div>
 <div class="form-group">
  <label for="recipient-name" class="col-form-label">Account Name/Network:</label>
- <input type="text" class="form-control" id="recipient-name" placeholder="eg: Ecobank, GCB, MTN, Vodafone">
+ <input type="text" class="form-control" id="recipient-name" placeholder="eg: Ecobank, GCB, MTN, Vodafone" name="account_name"  required>
 </div>
 <div class="form-group">
 <label for="recipient-name" class="col-form-label">Account Number/MoMo Number:</label>
-<input type="text" class="form-control" id="recipient-name">
+<input type="number" class="form-control" id="recipient-name" name="account_number" required>
 </div>
 <div class="form-group">
-<label for="recipient-name" class="col-form-label">Membership Fee:</label>
-<input type="text" class="form-control" id="recipient-name" value='100'>
+<!-- <label for="recipient-name" class="col-form-label">Membership Fee:</label> -->
+<input type="hidden" class="form-control" id="recipient-name" value='10' name="fee">
 </div>
    <!-- <div class="form-group">
      <label for="message-text" class="col-form-label">Message:</label>
@@ -89,7 +84,7 @@ $home = new ProductController();
    </div> -->
 
 
-            <input type="submit" name="subscription" class="btn btn-primary" value="Add Product">
+            <input type="submit" name="subscription" class="btn btn-primary" value="Proceed to Payment">
 
 
 </form>

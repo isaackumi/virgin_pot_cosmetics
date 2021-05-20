@@ -25,7 +25,7 @@ $(document).ready(function(){
 
         // var amount = $("#amount"). val();
 
-        const endpoint = "http://13.68.189.1/api_quiz/country.php";
+        const endpoint = "http://localhost/api_quiz/country.php";
         // alert(amount);
 
             const user  = {

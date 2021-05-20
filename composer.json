@@ -10,8 +10,8 @@
         "psr-4": {
             "App\\": "classes",
             "Settings\\": "settings/",
-            "Controllers\\": "controllers/",
-            "Test\\":"tests/"
+            "Controllers\\": "controllers/"
+
         }
     },
     "require": {}

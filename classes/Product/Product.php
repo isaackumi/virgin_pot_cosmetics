@@ -86,7 +86,7 @@ public function view_one_product($pa){
 */
 public function search_a_product($sterm){
   //a query to search product matching term
-  $sql = "SELECT * FROM products WHERE product_title LIKE '%$sterm%'";
+  $sql = "SELECT * FROM products WHERE product_title LIKE '%$sterm%' or product_price LIKE '%$sterm%' or category LIKE '%$sterm%'";
 
   //execute the query and return boolean
   return $this->db_query($sql);
@@ -96,9 +96,9 @@ public function search_a_product($sterm){
 *method to update a product
 *takes the id, title and price
 */
-public function update_one_product($a, $b, $c){
+public function update_one_product($prod_title, $prod_price,$product_desc, $category,$prod_img,$prod_id){
   //a query to update a product
-  $sql = "UPDATE products SET `product_title`='$b', `product_price`='$c' WHERE product_id=$a";
+  $sql = "UPDATE products SET `product_title`='$prod_title', `category`='$category', `img1`='$prod_img', `product_price`='$prod_price',`product_desc`='$product_desc' WHERE product_id=$prod_id";
 
   //execute the query and return boolean
   return $this->db_query($sql);
@@ -149,37 +149,34 @@ public function qty($a){
   return $this->db_query($sql);
 }
 
-public function update_cart_quantity($a, $b, $c){
-  //a query to update a cart quantity
-  $sql = "UPDATE cart SET `qty`='$c' WHERE product_id='$a' AND customer_id='$b'";
-
-
-  return $this->db_query($sql);
-}
 
 
 
-
-
-public function check_cart_duplicate($a, $b){
-  //a query to get cart items base the two id
-  $sql = "SELECT * FROM cart WHERE product_id='$a' AND ip_add='$b'";
-
-  //execute the query and return boolean
-  return $this->db_query($sql);
-}
 
 
 /////
 
-public function insert_order($id, $pid,$email, $number, $address,$town,$qty){
+public function insert_order($customer_id,$random){
   // *generate a random number using rand() php function.
-  $random=rand();
+  // $random='FANK_'.rand();
   //get todays date(use the date('Y-m-d')
-  $date=date('Y-m-d');
+  // $date=date('Y-m-d');
   //set the order status to 'paid'
   $status="paid";
-  $sql="INSERT into orders(`order_id`,`customer_id`,`pid`,`email`,`contact`,`address`, `town`,`qty`, `invoice_no`,	`order_date`,`order_status`) VALUES('', '$id', '$pid','$email', '$number', '$address', '$town','$qty','$random','$date', '$status')";
+  $sql="INSERT into orders(`customer_id`, `invoice_no`,`order_status`) VALUES( '$customer_id','$random','$status')";
+  return $this->db_query($sql);
+}
+
+
+public function just_ordered_id($invoice_no){
+  $sql = "SELECT order_id FROM orders WHERE invoice_no = '$invoice_no'";
+  return $this->db_query($sql);
+}
+
+function populate_order_details($order_id,$invoice_no,$ip){
+  // $oder_id = $this->just_ordered_id($invoice_no);
+  $sql = "INSERT INTO orderdetails (order_id,product_id,qty)
+  SELECT '$order_id',product_id,qty FROM cart WHERE ip_add ='$ip'";
   return $this->db_query($sql);
 }
 
@@ -208,9 +205,9 @@ public function insert_order_details($order_id, $product_id, $customer_id, $qty)
 */
 
 //insert payment method goes here
-public function insert_payment($amount, $customer_id, $order_id){
-  $date=date('Y-m-d');
-  $sql="INSERT into payment(`pay_id`,	`amt`,	`customer_id`,	`order_id`,	`currency`,	`payment_date`) VALUES('', '$amount', '$customer_id', '$order_id', 'cedis', '$date')";
+public function insert_payment($amount, $customer_id, $invoice_no){
+  // $date=date('Y-m-d');
+  $sql="INSERT into payment(`amt`,	`customer_id`,`invoice_number`) VALUES( '$amount', '$customer_id',  '$invoice_no')";
   return $this->db_query($sql);
 
 }
@@ -226,7 +223,7 @@ public function view_product_name($a){
 
 public function delete_all_cart_item($a){
   //a query to delete all cart item base on id
-  $sql = "DELETE from cart WHERE customer_id='$a'";
+  $sql = "DELETE from cart WHERE ip_add='$a'";
 
   //execute the query and return boolean
   return $this->db_query($sql);
@@ -255,6 +252,18 @@ public function create_category($category){
   return $this->db_query($sql);
 
 }
+
+
+
+public function view_all_categories(){
+  //a query to delete all cart item base on id
+  $sql = "SELECT * FROM categories";
+
+  //execute the query and return boolean
+  return $this->db_query($sql);
+}
+
+
 
 }
 

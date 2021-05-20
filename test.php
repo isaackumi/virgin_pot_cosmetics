@@ -11,11 +11,12 @@ use Controllers\ProductController\ProductController;
 use Controllers\ProductController\PaymentController;
 
 
-$user = new User();
-$sub = new Subscription();
+// PaymentController::paystackInit();
+
+echo "welcome";
 
 
-PaymentController::init();
+// PaymentController::init();  http://13.68.189.1/sites
   // $server = $_SERVER['SERVER_NAME'];
   // print_r($server);
 
@@ -37,6 +38,37 @@ PaymentController::init();
 
 // print_r($sub->test());
 // print_r($sub->hasSubscription());
+
+//
+// $random='FANK_'.rand();
+// $date=date('Y-m-d');
+//
+// // var_dump($date);
+//
+//
+// // var_dump($_SERVER['SERVER_NAME']);
+// $host = $_SERVER['SERVER_NAME'];
+//
+// echo "$host"."/sites/";
+//
+// // var_dump(dirname(__DIR__));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
